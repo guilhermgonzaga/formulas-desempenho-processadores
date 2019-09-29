@@ -1,0 +1,211 @@
+\documentclass[12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage[colorlinks=false,linktoc=all]{hyperref}
+\usepackage[a4paper, margin=2.6cm]{geometry}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage[type={CC},modifier={zero},version={1.0},lang=brazilian]{doclicense}
+
+\renewcommand{\arraystretch}{1.1}
+
+% Permite adicionar texto itálico com espaços e caracteres UTF-8 no modo matemático
+\newcommand{\Text}[1]{\textrm{\textit{#1}}}
+
+
+% TODO Adicionar fórmulas de stall e desempenho da hierarquia de memórias
+
+
+\title{Fórmulas para Avaliação de Desempenho de Processadores}
+\author{}
+\date{}
+
+
+\begin{document}
+
+
+\maketitle
+
+\tableofcontents
+
+\vspace*{\fill}
+
+\doclicenseThis
+
+\newpage
+
+
+\section{Fundamentos}
+
+
+\subsection{Taxa e período do \textit{clock}}
+
+\[ \Text{taxa do clock} = \frac{1}{\Text{período do clock}} \]
+
+
+\subsection{Desempenho e tempo de execução}
+
+\[ \Text{desempenho}_A = \frac{1}{\Text{tempo de execução}_A} \]
+
+
+\subsection[Prefixos do SI e IEC]{Prefixos do Sistema Internacional de Unidades (SI) e \textit{International Electrotechnical Commission} (IEC)}
+
+A comunidade científica, por meio do Sistemas Internacional, criou prefixos (constantes numéricas) para facilitar a representação de magnitudes muito grandes ou muito pequenas.
+
+Igualmente, houve pela \textit{International Electrotechnical Commission} um esforço para criar constantes úteis no contexto da computação, pois a forma como circuitos digitais são implementados (álgebra booleana, aritmética em base binária etc.) torna os prefixos do SI por vezes inconvenientes.
+
+Pela proximidade entre $10^3=1000$ e $2^{10}=1024$, definiu-se prefixos a partir de $2^{10}$ para manter certa similaridade entre os dois conjuntos. A tabela~\ref{tab:prefixos} mostra os prefixos mais usados, bem como situações em que é preferível usar um conjunto de prefixos ao outro.
+
+\begin{table}[h]
+  \centering
+  \caption{Prefixos do SI e IEC}\smallskip
+  \label{tab:prefixos}
+  \begin{tabular}{|c|c|l|c|c|} \hline
+    & \multicolumn{2}{|p{3.4cm}|}{Para tempo, velocidade ou taxa de transferência (SI)} & \multicolumn{2}{|p{2.8cm}|}{Para tamanho ou capacidade (IEC)} \\ \hline
+    Prefixo & Símbolo & Valor    & Símbolo & Valor          \\ \hline
+    \multicolumn{5}{c}{\textbf{. . .}} \\ \hline
+    pico    & p       & \(10^{-12}\) & ---     & ---                 \\ %\hline
+    nano    & n       & \(10^{-9}\)  & ---     & ---                 \\ %\hline
+    micro   & \(\mu\) & \(10^{-6}\)  & ---     & ---                 \\ %\hline
+    mili    & m       & \(10^{-3}\)  & ---     & ---                 \\ %\hline
+    kilo    & K ou k  & \(10^3\)     & Ki      & \(2^{10}\) \\ %\hline % = 1024^1
+    Mega    & M       & \(10^6\)     & Mi      & \(2^{20}\) \\ %\hline % = 1024^2
+    Giga    & G       & \(10^9\)     & Gi      & \(2^{30}\) \\ %\hline % = 1024^3
+    Tera    & T       & \(10^{12}\)  & Ti      & \(2^{40}\) \\ %\hline % = 1024^4
+    Peta    & P       & \(10^{15}\)  & Pi      & \(2^{50}\) \\ %\hline % = 1024^5
+    Exa     & E       & \(10^{18}\)  & Ei      & \(2^{60}\) \\ \hline % = 1024^6
+    \multicolumn{5}{c}{\textbf{. . .}} \\
+  \end{tabular}
+\end{table}
+
+
+\section{\textit{Speedup}}
+
+
+Lembre-se: \textit{speedup} é uma medida que varia de acordo com o programa executado.
+
+\begin{equation} \label{eq:speedup}
+  \Text{speedup}_{A/B} =
+  \frac{\Text{desempenho}_A}{\Text{desempenho}_B} =
+  \frac{\Text{tempo de execução}_B}{\Text{tempo de execução}_A}
+\end{equation}
+
+Alternativamente:
+
+\[ \Text{desempenho}_A = \Text{speedup}_{A/B} \times \Text{desempenho}_B \]
+
+\[
+  \Text{tempo de execução}_A
+  = \frac{\Text{tempo de execução}_B}{\Text{speedup}_{A/B}}
+\]
+
+Dada a natureza do cálculo do \textit{speedup}, existe também a seguinte propriedade.
+
+\[ \Text{speedup}_{A/B} = \frac{1}{\Text{speedup}_{B/A}} \]
+
+
+\subsection{\textit{Speedup} calculado com modelo de referência}
+
+Considere dois processadores, \textit{A} e \textit{B}, e um programa \textit{P}. Deseja-se saber o valor de \( \Text{speedup}_{A/B} \) para \textit{P}, mas não se sabe os tempos de execução do programa em ambos os processadores.
+
+No entanto, existe um processador, \textit{X}, tal que \( \Text{speedup}_{A/X} \) e \( \Text{speedup}_{B/X} \) para \textit{P} são conhecidos. Nesta situação, pode-se aproveitar a seguinte propriedade.
+
+\begin{align*}
+  \Text{speedup}_{A/B}
+  &= \frac{\Text{desempenho}_A}{\Text{desempenho}_B} \\[\medskipamount]
+  &= \frac{
+      \Text{speedup}_{A/X} \times \Text{desempenho}_X
+    }{
+      \Text{speedup}_{B/X} \times \Text{desempenho}_X
+    } \\[\medskipamount]
+  &= \frac{\Text{speedup}_{A/X}}{\Text{speedup}_{B/X}}
+\end{align*}
+
+%\[ % Forma alternativa
+%  \Text{speedup}_{A/B}
+%  = \frac{\Text{desempenho}_A}{\Text{desempenho}_B}
+%  = \frac{
+%      \left(\Text{speedup}_{A/X} \times \Text{desempenho}_X\right)
+%    }{
+%      \left(\Text{speedup}_{B/X} \times \Text{desempenho}_X\right)
+%    }
+%  = \frac{\Text{speedup}_{A/X}}{\Text{speedup}_{B/X}}
+%\]
+
+Isso significa que o \textit{speedup} de um processador com relação a outro pode ser obtido com apenas os respectivos \textit{speedups} destes com relação a um terceiro processador qualquer.
+
+
+\section{Ciclos por Instrução (CPI)}
+
+
+Lembre-se: o CPI varia de acordo com o tipo de instrução executada.
+
+\begin{equation} \label{eq:numciclosclock}
+  \Text{nº de ciclos gastos} = \Text{nº de instruções executadas} \times \Text{CPI}
+\end{equation}
+
+
+\subsection{Cálculo do CPI Médio}
+
+Lembre-se: o CPI médio varia de acordo com o código executado. Considere:
+\begin{itemize}
+  \item \( C_i \): nº de instruções do tipo \textit{i} executadas
+  \item \( CPI_i \): nº de ciclos gastos com uma instrução do tipo \textit{i}
+  \item \( \Text{nº de ciclos gastos} = \sum_{\forall i} (C_i \times CPI_i) \)
+  \item \( \Text{nº de instruções executadas} = \sum_{\forall i} C_i \)
+\end{itemize}
+
+\[
+  CPI = \frac{\Text{nº de ciclos gastos}}{\Text{nº de instruções executadas}}
+  = \frac{\sum_{\forall i} (C_i \times CPI_i)}{\sum_{\forall i} C_i}
+\]
+
+Note que a equação acima é apenas a média ponderada dos CPI de cada tipo de instrução, onde os pesos são as proporções (\%) de cada tipo de instrução no código executado.
+
+
+\section{Equação de Desempenho do Processador}
+
+
+Lembre-se: o processador executa vários trechos de código ao mesmo tempo, sejam do seu programa ou não. Portanto, o tempo de CPU não inclui a execução de outros programas nem a espera por dispositivos de entrada e saída.
+
+\begin{align} \label{eq:tempocpu}
+  \Text{tempo}_{CPU} &= \Text{nº de ciclos gastos} \times \Text{período do clock} \\[\medskipamount]
+  &= \frac{\Text{nº de ciclos gastos}}{\Text{taxa do clock}} \nonumber
+\end{align}
+
+Substituindo a equação \ref{eq:numciclosclock} em \ref{eq:tempocpu}, obtemos
+
+\begin{align} \label{eq:desempenho}
+  \Text{tempo}_{CPU}
+  &= \Text{nº de instruções executadas} \times \Text{CPI} \times \Text{período do clock} \\[\medskipamount]
+  &= \frac{\Text{nº de instruções executadas} \times \Text{CPI}}{\Text{taxa do clock}} \nonumber
+\end{align}
+
+
+\section{Lei de Amdahl}
+
+
+Considere:
+\begin{itemize}
+  \item \(f \in [0, 1] \): fração do tempo de execução do programa a ser melhorada
+  \item \(p\): proporção da melhoria, se comparado ao programa sem a melhoria
+\end{itemize}
+
+\begin{align} \label{eq:leiamdahl}
+  \Text{tempo com melhoria}
+  &= \Text{tempo sem melhoria}_\Text{não afetado}
+  + \frac{\Text{tempo sem melhoria}_\Text{afetado}}{\Text{proporção da melhoria}} \\[\medskipamount]\nonumber
+  &= \Text{tempo sem melhoria} \times (1 - f)
+  + \frac{\Text{tempo sem melhoria} \times f}{p}
+\end{align}
+
+Manipulando-se a equação \ref{eq:leiamdahl} com o tempo de execução do programa sem a melhoria, encontra-se uma nova equação.
+
+\begin{equation} \label{eq:speedupamdahl}
+  speedup = \frac{1}{(1 - f) + \frac{f}{p}}
+\end{equation}
+
+
+\end{document}
