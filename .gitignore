@@ -1,1 +1,15 @@
-*.synctex.gz
+# LaTeX generated files
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.gz
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.tdo
+*.toc
+*.xml
