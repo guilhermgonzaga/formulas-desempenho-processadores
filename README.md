@@ -1,6 +1,6 @@
 # Fórmulas para avaliação de desempenho de processadores
 
-[![][license-shield]][license-url]
+[![license][license-shield]][license-url]
 
 [license-shield]: https://img.shields.io/github/license/guilhermgonzaga/formulas-desempenho-processadores?logo=latex
 [license-url]:    https://choosealicense.com/licenses/cc0-1.0/
