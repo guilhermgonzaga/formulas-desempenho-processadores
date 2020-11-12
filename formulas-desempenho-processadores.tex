@@ -5,10 +5,12 @@
 \usepackage[brazilian]{babel}
 \usepackage[colorlinks=false,linktoc=all]{hyperref}
 \usepackage[a4paper, margin=25mm]{geometry}
+\usepackage{tcolorbox}
 \usepackage{parskip}
 \usepackage{amsmath}
 \usepackage[type={CC},modifier={zero},version={1.0},lang=brazilian]{doclicense}
 
+\tcbset{colback=green!3!white,colframe=green!35!gray,fonttitle=\sc}
 
 \renewcommand{\arraystretch}{1.1}
 
@@ -54,12 +56,13 @@ Em sistemas modernos, processadores geralmente trabalham em várias tarefas simu
 
 O tempo de execução a ser tratado nas próximas seções pode ser um destes, a depender do contexto. Em geral, o tempo de CPU é usado, com exceção de casos em que haja interesse em analisar o desempenho multitarefas do processador.
 
+
 %\subsection{Desempenho}
 %
 %\[ \Text{desempenho}_A = \frac{1}{\Text{tempo de execução}_A} \]
 
 
-\subsection[Prefixos do SI e IEC]{Prefixos do Sistema Internacional de Unidades (SI) e \textit{International Electrotechnical Commission} (IEC)}
+\subsection[Prefixos de unidades do SI e IEC]{Prefixos do Sistema Internacional de Unidades (SI) e \textit{International Electrotechnical Commission} (IEC)}
 
 A comunidade científica, por meio do Sistemas Internacional, criou prefixos (constantes numéricas) para facilitar a representação de magnitudes muito grandes ou muito pequenas.
 
@@ -113,15 +116,19 @@ IEC
 \end{itemize}
 \end{minipage}
 
-Caso esteja curioso: a letra \emph{i} em \emph{Ki}, \emph{Mi} etc. vem de \emph{b\textbf{i}nary}.
-
-Quer um conselho? Não precisa pronunciar os nomes como a IEC definiu, apenas use os símbolos corretos.
+\begin{tcolorbox}[title=Dicas,colback=black!3!white,colframe=black!25!white]
+  Caso esteja curioso: a letra \emph{i} em \emph{Ki}, \emph{Mi} etc. vem de \emph{b\textbf{i}nary}.
+  \tcblower
+  Quer um conselho? Não precisa pronunciar os nomes como a IEC definiu, apenas use os símbolos corretos.
+\end{tcolorbox}
 
 
 \section{\textit{Speedup}}
 
 
-Lembre-se: \textit{speedup} é uma medida que varia de acordo com o programa executado.
+\begin{tcolorbox}[title=Lembre-se]
+  \textit{speedup} é uma medida que varia de acordo com o código executado.
+\end{tcolorbox}
 
 \begin{equation} \label{eq:speedup}
   \Text{speedup}_{A/B} =
@@ -174,16 +181,22 @@ Isso significa que o \textit{speedup} de um processador com relação a outro po
 \section{Ciclos por Instrução (CPI)}
 
 
-Lembre-se: o CPI varia de acordo com o tipo de instrução executada.
+\begin{tcolorbox}[title=Lembre-se]
+  O CPI varia de acordo com o tipo de instrução executada.
+\end{tcolorbox}
 
 \begin{equation} \label{eq:numciclosclock}
   \Text{nº de ciclos gastos} = \Text{nº de instruções executadas} \times \Text{CPI}
 \end{equation}
 
 
-\subsection{Cálculo do CPI Médio}
+\subsection{Cálculo do CPI médio}
 
-Lembre-se: o CPI médio varia de acordo com o código executado. Considere:
+\begin{tcolorbox}[title=Lembre-se]
+  O CPI médio varia de acordo com o código executado.
+\end{tcolorbox}
+
+Considere:
 \begin{itemize}
   \item \( C_i \): nº de instruções do tipo \emph{i} executadas
   \item \( CPI_i \): nº de ciclos gastos com uma instrução do tipo \emph{i}
@@ -210,8 +223,9 @@ As equações mudam um pouco com IPC, mas basta lembrar que este é o inverso do
 
 \section{Equação de Desempenho do Processador}
 
-
-Lembre-se: o processador executa vários trechos de código ao mesmo tempo, sejam do seu programa ou não. Portanto, o tempo de CPU não inclui a execução de outros programas nem a espera por dispositivos de entrada e saída.
+\begin{tcolorbox}[title=Lembre-se]
+  Um processador pode executar vários trechos de código ao mesmo tempo, sejam do seu programa ou não. Portanto, o tempo de CPU não inclui a execução de outros programas nem a espera por dispositivos de entrada e saída.
+\end{tcolorbox}
 
 \begin{align} \label{eq:tempocpu}
   \Text{tempo}_{CPU} &= \Text{nº de ciclos gastos} \times \Text{período do clock} \\[\medskipamount]
@@ -244,7 +258,7 @@ Considere:
   + \frac{\Text{tempo sem melhoria} \times f}{p}
 \end{align}
 
-Manipulando-se a equação \ref{eq:leiamdahl} com o tempo de execução original, encontra-se uma nova equação.
+Manipulando-se a equação \ref{eq:leiamdahl} com o tempo de execução original, encontramos uma nova equação.
 
 \begin{equation} \label{eq:speedupamdahl}
   speedup = \frac{1}{(1 - f) + \frac{f}{p}}

@@ -12,7 +12,6 @@ O texto está estritamente em português brasileiro, porém a tradução para ou
 
 ## Contribuir
 
-
 Incrementos são bem-vindos.
 
 Tarefas:
@@ -31,6 +30,7 @@ Tarefas:
 - `babel`
 - `hyperref`
 - `geometry`
+- `tcolorbox`
 - `parskip`
 - `amsmath`
 - `doclicense`
