@@ -1,9 +1,6 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Fórmulas para avaliação de desempenho de processadores
-
-[![license][license-shield]][license-url]
-
-[license-shield]: https://img.shields.io/github/license/guilhermgonzaga/formulas-desempenho-processadores?logo=latex
-[license-url]:    https://choosealicense.com/licenses/cc0-1.0/
 
 Documento Latex com fórmulas para avaliação de desempenho geralmente usadas em disciplinas de arquitetura e organização de computadores no ensino superior.
 
@@ -23,7 +20,6 @@ Tarefas:
 
 
 ## Dependências (pacotes)
-
 
 - `fontenc`
 - `inputenc`
